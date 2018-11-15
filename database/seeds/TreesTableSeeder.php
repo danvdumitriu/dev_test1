@@ -222,7 +222,32 @@ class TreesTableSeeder extends Seeder
                 'parent_id' => 15,
             ),
         ));
+
+
+        $big_data = [];
+        $max = 1000;
+        for($i=18;$i<=$max;$i++) {
+            $name = "Item ".rand(0,$max);
+            $record = [
+                "id" => $i,
+                "user_id" => 1,
+                "name" => $name,
+                "title" => $name,
+                "expanded" => 1,
+                "parent_id" => $this->setParentId($i, $max)
+            ];
+            $big_data[] = $record;
+        }
+
+        \DB::table('trees')->insert($big_data);
+
         
         
+    }
+
+    public function setParentId($id,$max) {
+        if($id<50) return null;
+        if($id<500) return rand(17,50);
+        return rand(500,$max);
     }
 }
