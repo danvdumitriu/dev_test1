@@ -35,10 +35,16 @@ export default class TreeStructure extends Component {
         this.getTreeData();
     }
 
+    // componentDidUpdate = () => {
+    //     console.log("hehe",$(".rst__tree [role='rowgroup']").length);
+    // }
+
     resizeContainer = () => {
 
+        console.log("container height",$(".rst__tree [role='rowgroup']").length);
         if($(".rst__tree [role='rowgroup']").length) {
             let tree_height = parseInt($(".rst__tree [role='rowgroup']").css('height').replace("px", ""));
+            console.log(tree_height);
 
             if (tree_height > minContainerSize) {
                 this.container.style.height = tree_height + "px";
@@ -64,10 +70,14 @@ export default class TreeStructure extends Component {
             })
             .then( data => {
                 // console.log("API get",typeof data,typeof data.treeData);
-                console.log(typeof data.treeData !== "undefined");
+                // console.log(typeof data.treeData !== "undefined");
 
                 if(typeof data.treeData !== "undefined") {
-                    this.setState(data);
+                    this.setState(data, () => {
+                        // console.log("edit name",this.state);
+                        // console.log("hehe",$(".rst__tree [role='rowgroup']").length);
+                        this.resizeContainer();
+                    });
                 }
                 //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
 
@@ -113,6 +123,17 @@ export default class TreeStructure extends Component {
                         onMoveNode={()=>{
                             this.handleStateChange("move");
                             console.log("move",this.state);
+                        }}
+                        // onVisibilityToggle={()=>{
+                        //     this.handleStateChange("visibility toggle");
+                        //     console.log("visib",this.state);
+                        // }}
+                        onVisibilityToggle={(args) => {
+                            this.setState( args.treeData , () => {
+                                this.handleStateChange("visibility changed");
+                                console.log("visib",this.state);
+                            })
+                            //console.log("args",args.treeData);
                         }}
                         treeData={this.state.treeData}
                         onChange={treeData => this.setState({ treeData })}
