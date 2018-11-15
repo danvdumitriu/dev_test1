@@ -225,7 +225,7 @@ class TreesTableSeeder extends Seeder
 
 
         $big_data = [];
-        $max = 1000;
+        $max = 200;
         for($i=18;$i<=$max;$i++) {
             $name = "Item ".rand(0,$max);
             $record = [

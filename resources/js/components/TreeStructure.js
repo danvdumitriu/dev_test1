@@ -15,7 +15,8 @@ export default class TreeStructure extends Component {
         super(props);
 
         this.state = {
-                treeData: []
+            error: "",
+            treeData: []
         };
     }
 
@@ -83,8 +84,17 @@ export default class TreeStructure extends Component {
             body: JSON.stringify(this.state)
         })
             .then(response => {
-                return response.json();
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    this.setState({
+                        error: "The tree structure won't be persisted after page refresh unless you register or login"
+                    });
+                }
             })
+            .catch((error) => {
+                console.log(error)
+            });
     }
 
     handleStateChange = (type) => {
@@ -98,6 +108,7 @@ export default class TreeStructure extends Component {
             firstNames[Math.floor(Math.random() * firstNames.length)];
         return (
             <div>
+                <div style={{"color":"red"}}>{this.state.error}</div>
                 <div ref={c => { this.container = c }} style={{ height: minContainerSize }}>
                     <SortableTree
                         onMoveNode={()=>{
