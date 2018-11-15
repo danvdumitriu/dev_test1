@@ -2,6 +2,10 @@ const path = require('path');
 const SRC_DIR = path.join(__dirname, '/resources/js');
 const DIST_DIR = path.join(__dirname, '/public/js');
 const webpack = require('webpack');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyESPlugin = require('uglify-es-webpack-plugin');
+
+
 module.exports = {
     entry: `${SRC_DIR}/index.js`,
     output: {
@@ -59,7 +63,11 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development')
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new UglifyESPlugin({
+            ecma: 6,
+            sourceMap: true,
         })
     ]
 };
