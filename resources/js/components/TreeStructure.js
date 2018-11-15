@@ -15,19 +15,24 @@ export default class TreeStructure extends Component {
         super(props);
 
         this.state = {
-            treeData: [{
-                title: 'Peter Olofsson',
-                name: 'Peter Olofsson',
-                children: [],
-                expanded: false
-
-            }, {
-                title: 'Karl Johansson',
-                name: 'Karl Johansson',
-                children: [],
-                expanded: false
-            }]
+                treeData: []
+            // treeData: [{
+            //     title: 'Peter Olofsson',
+            //     name: 'Peter Olofsson',
+            //     children: [],
+            //     expanded: false
+            //
+            // }, {
+            //     title: 'Karl Johansson',
+            //     name: 'Karl Johansson',
+            //     children: [],
+            //     expanded: false
+            // }]
         };
+    }
+
+    componentDidMount = () => {
+        this.getTreeData();
     }
 
     resizeContainer = () => {
@@ -41,9 +46,35 @@ export default class TreeStructure extends Component {
         }
     }
 
-    handleStateChange = (type) => {
-        this.resizeContainer();
+    getTreeData = () => {
+        /*Fetch API for post request */
+        fetch( '/api/get_tree', {
+            method:'post',
+            /* headers are important*/
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
 
+            body: JSON.stringify(this.state)
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then( data => {
+                // console.log("API get",typeof data,typeof data.treeData);
+                console.log(typeof data.treeData !== "undefined");
+
+                if(typeof data.treeData !== "undefined") {
+                    this.setState(data);
+                }
+                //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
+
+            })
+    }
+
+    saveTreeData = () => {
         /*Fetch API for post request */
         fetch( '/api/save_tree', {
             method:'post',
@@ -56,15 +87,19 @@ export default class TreeStructure extends Component {
 
             body: JSON.stringify(this.state)
         })
-        .then(response => {
-            return response.json();
-        })
-        .then( data => {
-            console.log("API save",data);
-            //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
+            .then(response => {
+                return response.json();
+            })
+            .then( data => {
+                console.log("API save",data);
+                //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
 
-        })
+            })
+    }
 
+    handleStateChange = (type) => {
+        this.resizeContainer();
+        this.saveTreeData();
     }
 
     render() {
