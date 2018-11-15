@@ -3,8 +3,8 @@ import SortableTree, { addNodeUnderParent, removeNodeAtPath, changeNodeAtPath } 
 import 'react-sortable-tree/style.css'; // This only needs to be imported once in your app
 
 const new_node = {
-    title: '',
-    name: '',
+    title: 'new',
+    name: 'new',
     children: [],
     expanded: false
 }
@@ -16,35 +16,24 @@ export default class TreeStructure extends Component {
 
         this.state = {
                 treeData: []
-            // treeData: [{
-            //     title: 'Peter Olofsson',
-            //     name: 'Peter Olofsson',
-            //     children: [],
-            //     expanded: false
-            //
-            // }, {
-            //     title: 'Karl Johansson',
-            //     name: 'Karl Johansson',
-            //     children: [],
-            //     expanded: false
-            // }]
         };
     }
 
     componentDidMount = () => {
         this.getTreeData();
-    }
 
-    // componentDidUpdate = () => {
-    //     console.log("hehe",$(".rst__tree [role='rowgroup']").length);
-    // }
+        let checkExist = setInterval(() => {
+            if ($(".rst__tree [role='rowgroup']").length) {
+                this.resizeContainer();
+                clearInterval(checkExist);
+            }
+        }, 300); // check every 300ms
+    }
 
     resizeContainer = () => {
 
-        console.log("container height",$(".rst__tree [role='rowgroup']").length);
         if($(".rst__tree [role='rowgroup']").length) {
             let tree_height = parseInt($(".rst__tree [role='rowgroup']").css('height').replace("px", ""));
-            console.log(tree_height);
 
             if (tree_height > minContainerSize) {
                 this.container.style.height = tree_height + "px";
@@ -69,17 +58,13 @@ export default class TreeStructure extends Component {
                 return response.json()
             })
             .then( data => {
-                // console.log("API get",typeof data,typeof data.treeData);
-                // console.log(typeof data.treeData !== "undefined");
 
                 if(typeof data.treeData !== "undefined") {
                     this.setState(data, () => {
-                        // console.log("edit name",this.state);
-                        // console.log("hehe",$(".rst__tree [role='rowgroup']").length);
+
                         this.resizeContainer();
                     });
                 }
-                //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
 
             })
     }
@@ -100,11 +85,6 @@ export default class TreeStructure extends Component {
             .then(response => {
                 return response.json();
             })
-            .then( data => {
-                console.log("API save",data);
-                //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
-
-            })
     }
 
     handleStateChange = (type) => {
@@ -122,18 +102,12 @@ export default class TreeStructure extends Component {
                     <SortableTree
                         onMoveNode={()=>{
                             this.handleStateChange("move");
-                            console.log("move",this.state);
                         }}
-                        // onVisibilityToggle={()=>{
-                        //     this.handleStateChange("visibility toggle");
-                        //     console.log("visib",this.state);
-                        // }}
+
                         onVisibilityToggle={(args) => {
                             this.setState( args.treeData , () => {
                                 this.handleStateChange("visibility changed");
-                                console.log("visib",this.state);
                             })
-                            //console.log("args",args.treeData);
                         }}
                         treeData={this.state.treeData}
                         onChange={treeData => this.setState({ treeData })}
@@ -152,15 +126,13 @@ export default class TreeStructure extends Component {
                                                 getNodeKey,
                                                 newNode: { ...node, name, title:name }
                                             }),
-                                        }), () => {
-                                            console.log("edit name",this.state);
-                                        });
+                                        }));
                                     }}
                                     onBlur={event => {
                                         this.handleStateChange("blur after edit");
-                                        console.log("blur",this.state);
 
                                     }}
+
                                 />
                             ),
                             buttons: [
@@ -177,7 +149,6 @@ export default class TreeStructure extends Component {
                                             }).treeData,
                                         }), () => {
                                             this.handleStateChange("add child");
-                                            console.log("add",this.state);
                                         })
                                     }
                                 >
@@ -193,7 +164,6 @@ export default class TreeStructure extends Component {
                                             }),
                                         }), () => {
                                             this.handleStateChange("remove");
-                                            console.log("remove",this.state);
                                         })
                                     }
                                 >
@@ -210,7 +180,6 @@ export default class TreeStructure extends Component {
                             treeData: state.treeData.concat(new_node),
                         }), () => {
                             this.handleStateChange("add more");
-                            console.log("add more",this.state);
                         })
                     }
                 >
