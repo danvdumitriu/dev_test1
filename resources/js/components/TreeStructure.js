@@ -8,6 +8,8 @@ const new_node = {
     children: [],
     expanded: false
 }
+const minContainerSize = 300;
+
 export default class TreeStructure extends Component {
     constructor(props) {
         super(props);
@@ -28,8 +30,41 @@ export default class TreeStructure extends Component {
         };
     }
 
+    resizeContainer = () => {
+
+        if($(".rst__tree [role='rowgroup']").length) {
+            let tree_height = parseInt($(".rst__tree [role='rowgroup']").css('height').replace("px", ""));
+
+            if (tree_height > minContainerSize) {
+                this.container.style.height = tree_height + "px";
+            }
+        }
+    }
+
     handleStateChange = (type) => {
-        console.log("str",type,JSON.stringify(this.state));
+        this.resizeContainer();
+
+        /*Fetch API for post request */
+        fetch( '/api/save_tree', {
+            method:'post',
+            /* headers are important*/
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            body: JSON.stringify(this.state)
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then( data => {
+            console.log("API save",data);
+            //this.setState({ redirectToNewPage: "/films/"+this.processFilmName(data.name) })
+
+        })
+
     }
 
     render() {
@@ -38,7 +73,7 @@ export default class TreeStructure extends Component {
             firstNames[Math.floor(Math.random() * firstNames.length)];
         return (
             <div>
-                <div style={{ height: 300 }}>
+                <div ref={c => { this.container = c }} style={{ height: minContainerSize }}>
                     <SortableTree
                         onMoveNode={()=>{
                             this.handleStateChange("move");
