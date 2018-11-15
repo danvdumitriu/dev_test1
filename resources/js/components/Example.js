@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import TreeStructure from "./TreeStructure";
 
 export default class Example extends Component {
     render() {
@@ -12,6 +13,7 @@ export default class Example extends Component {
 
                             <div className="card-body">
                                 I'm an example component!
+                                <TreeStructure/>
                             </div>
                         </div>
                     </div>
