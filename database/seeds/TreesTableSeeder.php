@@ -225,9 +225,9 @@ class TreesTableSeeder extends Seeder
 
 
         $big_data = [];
-        $max = 200;
+        $max = 1000;
         for($i=18;$i<=$max;$i++) {
-            $name = "Item ".rand(0,$max);
+            $name = "Item $i";
             $record = [
                 "id" => $i,
                 "user_id" => 1,
@@ -247,7 +247,7 @@ class TreesTableSeeder extends Seeder
 
     public function setParentId($id,$max) {
         if($id<50) return null;
-        if($id<500) return rand(17,50);
-        return rand(500,$max);
+        if($id<500) return rand(18,50);
+        return rand(51,100);
     }
 }
