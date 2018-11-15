@@ -18,6 +18,8 @@ class CreateTreesTable extends Migration
             $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->boolean("expanded")->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->nestedSet();
 

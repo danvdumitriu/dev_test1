@@ -10,7 +10,7 @@ class Tree extends Model
 {
     use NodeTrait;
 
-    protected $fillable = ["title","name","expanded"];
+    protected $fillable = ["title","name","expanded","user_id"];
 
 
     //
