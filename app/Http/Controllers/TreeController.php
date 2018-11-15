@@ -69,7 +69,7 @@ class TreeController extends Controller
 
     public function saveTree(Request $request)
     {
-        if(!Auth::check()) return Response::json(['error' => "Unauthorized"], 401);
+        if(!Auth::check()) return Response::json(['error' => "Not acceptable"], 406);
 
         $user_id = Auth::user()->id;
 
