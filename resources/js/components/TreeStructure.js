@@ -8,6 +8,8 @@ const new_node = {
     children: [],
     expanded: false
 }
+const api_endpoint = 'api/tree';
+
 const minContainerSize = 300;
 
 export default class TreeStructure extends Component {
@@ -44,7 +46,7 @@ export default class TreeStructure extends Component {
 
     getTreeData = () => {
         /*Fetch API for post request */
-        fetch( '/api/get_tree', {
+        fetch( api_endpoint, {
             method:'get',
             /* headers are important*/
             headers: {
@@ -70,7 +72,7 @@ export default class TreeStructure extends Component {
 
     saveTreeData = () => {
         /*Fetch API for post request */
-        fetch( '/api/save_tree', {
+        fetch( api_endpoint, {
             method:'post',
             /* headers are important*/
             headers: {

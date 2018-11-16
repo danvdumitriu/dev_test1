@@ -26,6 +26,7 @@ class TreeController extends Controller
         if(!is_array($data)) $data = $data->toArray();
 
         $traverse = function (&$data) use (&$traverse, $user_id) {
+            if(count($data)>0)
             foreach ($data as &$item) {
 
                 foreach($item as $field_name => &$value) {
@@ -69,11 +70,14 @@ class TreeController extends Controller
 
     public function saveTree(Request $request)
     {
-        if(!Auth::check()) return Response::json(['error' => "Unauthorized"], 401);
+        if(!Auth::check()) return Response::json(['error' => "Missing authentication params"], 400);
 
         $user_id = Auth::user()->id;
 
         $tree_array = $request->toArray();
+
+        if(!isset($tree_array["treeData"])) return Response::json(['error' => "Missing 'treeData'"], 400);
+
         $tree_array = $this->formatTree($tree_array["treeData"], $user_id);
 
         Tree::where("user_id",$user_id)->delete();

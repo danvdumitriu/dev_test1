@@ -1,0 +1,103 @@
+swagger: "2.0"
+info:
+  description: "Xait test project"
+  version: "1.0.0"
+  title: "Xait Test"
+
+host: "xait_test.localhost"
+basePath: "/api"
+tags:
+- name: "tree"
+  description: "Read/write tree API endpoint"
+schemes:
+- "http"
+paths:
+  /tree:
+    get:
+      tags:
+      - "tree"
+      summary: "Read tree data"
+      description: ""
+      produces:
+      - "application/json"
+
+
+      responses:
+        200:
+          description: "OK"
+
+    post:
+      tags:
+      - "tree"
+      summary: "Updates a pet in the store with form data"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      security:
+        - cookieAuth: []
+        - cookieAuth2: []
+
+      parameters:
+        - in: body
+          name: body
+          description: Whole tree structure.
+          schema:
+            type: object
+            required:
+              - treeData
+            properties:
+              treeData:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    title:
+                      type: string
+                    expanded:
+                      type: boolean
+                    children:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          title:
+                            type: string
+                          expanded:
+                            type: boolean
+                          children:
+                            type: array
+                            items:
+                              type: object
+
+
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Request payload malformed"
+        419:
+          description: "No session context provided"
+
+securityDefinitions:
+  cookieAuth:
+    type: apiKey
+    name:
+      Cookie
+    in: cookie
+  cookieAuth2:
+    type: apiKey
+    name:
+      X-CSRF-TOKE
+    in: header
+
+
+
+
+
+

@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/api/save_tree','TreeController@saveTree');
-Route::get('/api/get_tree', 'TreeController@getTree');
+Route::post('/api/tree','TreeController@saveTree');
+Route::get('/api/tree', 'TreeController@getTree');
 
 
 Auth::routes();
