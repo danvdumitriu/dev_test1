@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Xait Test"
   },
-  "host": "xait_test.localhost",
+  "host": "xait_test.wingover.ro",
   "basePath": "/api",
   "tags": [
     {
