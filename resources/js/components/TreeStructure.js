@@ -45,15 +45,13 @@ export default class TreeStructure extends Component {
     getTreeData = () => {
         /*Fetch API for post request */
         fetch( '/api/get_tree', {
-            method:'post',
+            method:'get',
             /* headers are important*/
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-
-            body: JSON.stringify(this.state)
+            }
         })
             .then(response => {
                 return response.json()

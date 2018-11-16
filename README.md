@@ -5,7 +5,7 @@ Live demo at: [http://xait_test.wingover.ro/](http://xait_test.wingover.ro/)
 
 Apache user/pass: dan / dan2018!
 
-Predefined user with 1000 tree records for testing app behavior
+Predefined user with 600 tree records for testing app behavior
 with large data set:
 
 bigdata@example.com / 123123
