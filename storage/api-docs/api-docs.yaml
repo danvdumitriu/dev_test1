@@ -93,7 +93,7 @@ securityDefinitions:
   cookieAuth2:
     type: apiKey
     name:
-      X-CSRF-TOKE
+      X-CSRF-TOKEN
     in: header
 
 

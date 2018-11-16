@@ -45,6 +45,14 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "cookieAuth2": []
+          }
+        ],
         "parameters": [
           {
             "in": "body",
@@ -104,14 +112,26 @@
           "200": {
             "description": "OK"
           },
-          "406": {
-            "description": "Not logged in"
+          "400": {
+            "description": "Request payload malformed"
           },
           "419": {
             "description": "No session context provided"
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "cookieAuth": {
+      "type": "apiKey",
+      "name": "Cookie",
+      "in": "cookie"
+    },
+    "cookieAuth2": {
+      "type": "apiKey",
+      "name": "X-CSRF-TOKEN",
+      "in": "header"
     }
   }
 }
