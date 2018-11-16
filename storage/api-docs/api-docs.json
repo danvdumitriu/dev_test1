@@ -22,7 +22,7 @@
         "tags": [
           "tree"
         ],
-        "summary": "Read tree data",
+        "summary": "Reads tree data",
         "description": "",
         "produces": [
           "application/json"
@@ -37,8 +37,8 @@
         "tags": [
           "tree"
         ],
-        "summary": "Updates a pet in the store with form data",
-        "description": "",
+        "summary": "Writes tree data",
+        "description": "For authentication use the values of 'xait_test_session' (both with the label, eg.: xait_test_session=...) and 'X-CSRF-TOKEN' (only the value, without the label).",
         "consumes": [
           "application/json"
         ],
