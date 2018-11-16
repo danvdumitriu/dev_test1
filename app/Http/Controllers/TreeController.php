@@ -29,6 +29,10 @@ class TreeController extends Controller
             if(count($data)>0)
             foreach ($data as &$item) {
 
+                $item = array_filter($item, function($key) {
+                    return $key!="user_id";
+                }, ARRAY_FILTER_USE_KEY);
+
                 foreach($item as $field_name => &$value) {
 
                     if($field_name == "expanded") {
