@@ -8,6 +8,8 @@ const new_node = {
     children: [],
     expanded: false
 }
+const api_endpoint = 'api/tree';
+
 const minContainerSize = 300;
 
 export default class TreeStructure extends Component {
@@ -44,16 +46,14 @@ export default class TreeStructure extends Component {
 
     getTreeData = () => {
         /*Fetch API for post request */
-        fetch( '/api/get_tree', {
-            method:'post',
+        fetch( api_endpoint, {
+            method:'get',
             /* headers are important*/
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-
-            body: JSON.stringify(this.state)
+            }
         })
             .then(response => {
                 return response.json()
@@ -72,7 +72,7 @@ export default class TreeStructure extends Component {
 
     saveTreeData = () => {
         /*Fetch API for post request */
-        fetch( '/api/save_tree', {
+        fetch( api_endpoint, {
             method:'post',
             /* headers are important*/
             headers: {
