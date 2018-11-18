@@ -10,6 +10,9 @@ with large data set:
 
 bigdata@example.com / 123123
 
+Swagger endpoint for API documentation:
+[http://xait_test.wingover.ro/api/documentation](http://xait_test.wingover.ro/api/documentation)
+
 Installation / Usage
 --------------------
 
