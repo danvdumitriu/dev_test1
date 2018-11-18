@@ -1,5 +1,5 @@
-Movie Test App
-==============
+Xait Test 
+=========
 
 Live demo at: [http://xait_test.wingover.ro/](http://xait_test.wingover.ro/)
 
@@ -37,4 +37,14 @@ Then run:
 php artisan migrate --seed
 chmod -R 777 storage/
 npm run build
+```
+
+Unit tests
+----------
+
+Unit tests can be run with the following command:
+
+```
+vendor/phpunit/phpunit/phpunit
+
 ```
