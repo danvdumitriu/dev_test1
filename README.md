@@ -1,6 +1,8 @@
 Xait Test 
 =========
 
+See: https://github.com/danvdumitriu/xait_test/blob/master/DevTask.pdf for task requirements.
+
 Live demo at: [http://xait_test.wingover.ro/](http://xait_test.wingover.ro/)
 
 Apache user/pass: dan / dan2018!
